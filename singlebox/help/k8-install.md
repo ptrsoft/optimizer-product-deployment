@@ -1,5 +1,32 @@
-- [create K8 in local machine via ansible](#create-K8-in-local-machine-via-ansible)
-- [install product via helm-chart on local k8 ](#install-via-helm-chart-on-local-k8)
+- [Install Containerd Runtime (all nodes)](#install-containerd-runtime-all-nodes)
+  - [install dependencies](#install-dependencies)
+  - [Enable the Docker repository](#enable-the-docker-repository)
+  - [Update the package list and install containerd:](#update-the-package-list-and-install-containerd)
+  - [Configure containerd to start using systemd as cgroup:](#configure-containerd-to-start-using-systemd-as-cgroup)
+  - [Load the required kernel modules on all nodes](#load-the-required-kernel-modules-on-all-nodes)
+  - [Restart and enable the containerd service:](#restart-and-enable-the-containerd-service)
+- [Install K8](#install-k8)
+  - [Do some prerequisiste](#do-some-prerequisiste)
+  - [disable swap](#disable-swap)
+  - [Configure the critical kernel parameters for Kubernetes using the following:](#configure-the-critical-kernel-parameters-for-kubernetes-using-the-following)
+  - [Then, reload the changes](#then-reload-the-changes)
+  - [Add Apt Repository for Kubernetes (all nodes)](#add-apt-repository-for-kubernetes-all-nodes)
+  - [Install Kubectl, Kubeadm, and Kubelet (all nodes)](#install-kubectl-kubeadm-and-kubelet-all-nodes)
+  - [Initialize Kubernetes Cluster with Kubeadm (master node)](#initialize-kubernetes-cluster-with-kubeadm-master-node)
+  - [Run the following commands on the master node](#run-the-following-commands-on-the-master-node)
+  - [Next, use kubectl commands to check the cluster and node status](#next-use-kubectl-commands-to-check-the-cluster-and-node-status)
+  - [Add Worker Nodes to the Cluster (worker nodes)](#add-worker-nodes-to-the-cluster-worker-nodes)
+  - [Install Kubernetes Network Plugin (master node)](#install-kubernetes-network-plugin-master-node)
+  - [Verify the cluster and test (master node)](#verify-the-cluster-and-test-master-node)
+  - [Deploy test application on cluster (master node)](#deploy-test-application-on-cluster-master-node)
+  - [How to run pods in master node](#how-to-run-pods-in-master-node)
+  - [To run as root](#to-run-as-root)
+  - [How to check all stuffs are properly installed](#how-to-check-all-stuffs-are-properly-installed)
+- [Some extra tips -](#some-extra-tips--)
+  - [How to add aliases so that you can run command faster](#how-to-add-aliases-so-that-you-can-run-command-faster)
+  - [How to export docker images to crictl discovered image](#how-to-export-docker-images-to-crictl-discovered-image)
+  - [How to debug the service](#how-to-debug-the-service)
+
 
 # Install Containerd Runtime (all nodes)
 
@@ -22,7 +49,7 @@ containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
 sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
 
 
-# Load the required kernel modules on all nodes
+## Load the required kernel modules on all nodes
 
 sudo tee /etc/modules-load.d/containerd.conf <<EOF
 overlay
@@ -40,13 +67,15 @@ That completes the conatinerd runtime install, that is used by k8.
 
 Now you can go ahead and install the k8 as follows:
 
-# Do some prerequisiste
+# Install K8
+
+## Do some prerequisiste
 
 ## disable swap
 sudo swapoff -a
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 
-# Configure the critical kernel parameters for Kubernetes using the following:
+## Configure the critical kernel parameters for Kubernetes using the following:
 
 sudo tee /etc/sysctl.d/kubernetes.conf <<EOF
 net.bridge.bridge-nf-call-ip6tables = 1
@@ -54,7 +83,7 @@ net.bridge.bridge-nf-call-iptables = 1
 net.ipv4.ip_forward = 1
 EOF
 
-# Then, reload the changes
+## Then, reload the changes
 
 sudo sysctl --system
 
@@ -132,7 +161,7 @@ export KUBECONFIG=/etc/kubernetes/admin.conf
 
 # Some extra tips -
 
-# How to add aliases so that you can run command faster
+## How to add aliases so that you can run command faster
 
 alias k='kubectl'
 alias kl='kubectl logs'
