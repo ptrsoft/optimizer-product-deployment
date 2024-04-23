@@ -1,3 +1,6 @@
+- [create K8 in local machine via ansible](#create-K8-in-local-machine-via-ansible)
+- [install product via helm-chart on local k8 ](#install-via-helm-chart-on-local-k8)
+
 # Install Containerd Runtime (all nodes)
 
 ## install dependencies
@@ -128,6 +131,19 @@ export KUBECONFIG=/etc/kubernetes/admin.conf
 
 
 # Some extra tips -
+
+# How to add aliases so that you can run command faster
+
+alias k='kubectl'
+alias kl='kubectl logs'
+alias kdd='kubectl delete'
+alias ke='kubectl edit'
+alias kg='kubectl get'
+alias kd='kubectl describe'
+alias kp='kubectl get po --all-namespaces'
+
+add the above aliases in your ~/.bashrc file so that you can use command faster
+
 
 ## How to export docker images to crictl discovered image
 
