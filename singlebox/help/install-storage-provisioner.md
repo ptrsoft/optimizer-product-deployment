@@ -1,0 +1,1 @@
+# How to provision the storage provisioner in k8 cluster

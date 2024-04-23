@@ -125,6 +125,9 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl get nodes
 
 ## Add Worker Nodes to the Cluster (worker nodes)
+// papu - there is no need for this step as long as you decide to install it in a single box
+// please ask me before u proceed with a multinode
+
 kubeadm join 146.190.135.86:6443 --token f1h95l.u4nkex9cw8d0g63w         --discovery-token-ca-cert-hash sha256:6d15f2a79bdb38d1666af50c85f060b9fadc73f13c932e0e2a9eeef08f51f91a
 
 ## Install Kubernetes Network Plugin (master node)
