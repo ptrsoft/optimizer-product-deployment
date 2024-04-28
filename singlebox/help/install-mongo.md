@@ -34,14 +34,7 @@ If all goes well , you will see the mongo db instance will
 
 ## How to use the database
 
-The Community Kubernetes Operator creates secrets that contains users' connection strings and credentials.
-
-The secrets follow this naming convention: <metadata.name>-<auth-db>-<username>, where:
-
-Variable	Description	Value in Sample
-<metadata.name>	Name of the MongoDB database resource.	example-mongodb
-<auth-db>	Authentication database where you defined the database user.	admin
-<username>	Username of the database user.	my-user
+![alt text](image-16.png)
 
 You can see the secret as below
 ![alt text](image-13.png)
