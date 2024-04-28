@@ -93,3 +93,6 @@ db.myCollection.insertOne( { x: 1 } );
 
 record get added properly
 
+
+Ref- https://github.com/mongodb/mongodb-kubernetes-operator/tree/master/docs
+
