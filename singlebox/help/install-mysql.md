@@ -85,10 +85,15 @@ kubectl apply -f examples/manifests/sqljobs
 ==========================================
 
 kubectl get sqljobs
+
 NAME       COMPLETE   STATUS    MARIADB   AGE
+
 01-users   True       Success   mariadb   2m47s
+
 02-repos   True       Success   mariadb   2m47s
+
 03-stars   True       Success   mariadb   2m47s
+
 ===================================================
 
 
