@@ -1,3 +1,5 @@
+## install the kube prometheus stack + Certificate manager because operator use some crds
+
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 
@@ -8,11 +10,16 @@ helm install prometheus-stack prometheus-community/kube-prometheus-stack
 
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.5/cert-manager.yaml
 
+
+## now install the operator
+
 helm repo add mariadb-operator https://mariadb-operator.github.io/mariadb-operator
 helm install mariadb-operator mariadb-operator/mariadb-operator \
   --set metrics.enabled=true --set webhook.cert.certManager.enabled=true
 
-Clone the operator 
+## Now install the main database
+
+Clone the operator repo
 
 https://github.com/mariadb-operator/mariadb-operator.git
 
@@ -21,6 +28,8 @@ kubectl apply -f examples/manifests/config
 
 Next, you can proceed with the installation of a MariaDB instance:
 kubectl apply -f examples/manifests/mariadb.yaml
+
+## Now verify everything
 
 Check the following :
 
