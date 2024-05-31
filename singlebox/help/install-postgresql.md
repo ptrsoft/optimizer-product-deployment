@@ -6,6 +6,8 @@ https://github.com/cloudnative-pg/cloudnative-pg/blob/main/docs/src/quickstart.m
 2. percona operator
 Ref -- https://docs.percona.com/percona-operator-for-postgresql/2.0/kubectl.html
 
+
+Note - finally i see that cloudnative operator works really good , so i switch to that !
 ========================================================
 ## Firstly let us install the stuffs by percona operator
 
@@ -52,3 +54,38 @@ Expected outout will be like as below:
 
 
 =====================================================================================
+# How to install by CloudNative Operator 
+## install the operator
+
+kubectl apply --server-side -f \
+  https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/release-1.23/releases/cnpg-1.23.1.yaml
+
+You can verify that with:
+
+kubectl get deployment -n cnpg-system cnpg-controller-manager
+
+## Now deploy a simple cluster 
+
+kubectl apply -f - <<EOF
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cluster-with-metrics
+spec:
+  instances: 3
+
+  storage:
+    size: 1Gi
+
+  monitoring:
+    enablePodMonitor: true
+EOF
+
+You will get lot of sample clsuter definitions in 
+https://github.com/cloudnative-pg/cloudnative-pg
+
+/docs/src/samples
+
+![alt text](image-20.png)
+
