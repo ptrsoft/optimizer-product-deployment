@@ -1,3 +1,21 @@
-FROM alpine:3.15
-RUN apk --no-cache add postgresql-client
-ENTRYPOINT [ "psql" ]
+FROM alpine:latest
+
+RUN apk add --no-cache postgresql-client busybox-extras
+
+ARG PUID=1000
+ARG PGID=1000
+
+RUN \
+  addgroup -g "${PGID}" postgresql-client && \
+  adduser \
+    -u "${PUID}" \
+    -G postgresql-client \
+    -h /postgresql-client \
+    -D \
+    postgresql-client
+
+WORKDIR /postgresql-client
+
+USER postgresql-client
+
+ENTRYPOINT ["psql"]

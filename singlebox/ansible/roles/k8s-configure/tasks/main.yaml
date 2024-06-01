@@ -74,7 +74,7 @@
   shell: helm repo update
 
 - name: Install nginx ingress controller
-  shell: helm upgrade --install ngingress ingress-nginx/ingress-nginx --set rbac.create=true --set controller.hostNetwork=true --set controller.extraArgs.default-ssl-certificate=default/defaultcert --set controller.kind=DaemonSet
+  shell: helm upgrade --install ngingress ingress-nginx/ingress-nginx --set rbac.create=true --set controller.hostNetwork=true --set controller.extraArgs.default-ssl-certificate=default/defaultcert --set controller.kind=DaemonSet 
   run_once: true
 
 # - name: Copy custom nginx-ingress chart
