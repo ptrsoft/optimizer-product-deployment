@@ -258,4 +258,18 @@ Run a busybox for debug
 kubectl run -i --tty --rm debug --image=busybox --restart=Never -- sh
 use netcat tools etc for connecting service
 
+- fetch-deployment-repo
+- list-deployment-workspace
+- copy-build-content-in-www
+- cleanup-prior-ui-hosting
+- run-cloudformation-for-ui-hosting
+  
+
+
+PTRTechnology.com 
+
+At our SAAS platform, you will get Application that are complete open and you will be able to add new features at ease.
+To deliver you highest flexibility, you can hire a complete engineering team on demand in our portal from our certified resource pool. The team will be available instantly with predicatble delivery and outcome driven billing model. 
+
+
 
