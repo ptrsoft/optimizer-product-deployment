@@ -15,7 +15,7 @@ kubectl get pods --namespace tekton-pipelines --watch
 # Install Trigger
 
 kubectl apply --filename \
-https://storage.googleapis.com/tekton-releases/triggers/latest/release.yaml
+https://storage.googleapis.com/tekton-releases/triggers/latest/release-full.yaml
 kubectl apply --filename \
 https://storage.googleapis.com/tekton-releases/triggers/latest/interceptors.yaml
 kubectl get pods --namespace tekton-pipelines --watch
@@ -27,14 +27,10 @@ kubectl get pods --namespace tekton-pipelines --watch
 
 ## Access Dashboard with Ingress
 
-First install a default certificate in kubernetes 
-- Copy openssl config in temp 
-cp openssl.cfg /tmp/openssl.cfg
+To access the tekton dashboard with ingress, we need to have the ingress controller installed in the kubernetes. This is done by the ansible script that configure the kubernetes cluster as follows:
 
-- Generate SSL certificate
-openssl req -x509 -sha256 -nodes -newkey rsa:4096 -keyout /tmp/key.pem -out /tmp/cert.pem -extensions v3_req -days 9001 -config /tmp/openssl.cfg
+ansible-playbook -vv -e "ansible_ssh_user=papu"  -e "ansible_connection=local"  -i "localhost," ansible/test.yaml
 
-- name: Create tls secret in k8
-kubectl create secret tls defaultcert --key /tmp/key.pem --cert /tmp/cert.pem
-
-
+Post to that , we can install the ingress for the tekton dashboard as follows:
+k apply -f ingress.yaml -n tekton-pipelines
+(ingress.yaml inside nginx-ingress)
